@@ -20,7 +20,7 @@ def leitura_de_arquivo_pri(path):
     '''
     mydb = mysql.connector.connect(host="localhost", user="smartfleet", password="smartkey",database="smartfleet")
     con = mydb.cursor()
-    sql = "INSERT INTO `smartfleet`.`pri`(`tree_amount`,`volume_total`,`date`)VALUES(%s,%s,%s);"
+    sql = "INSERT INTO `smartfleet`.`pri`(`tree_amount`,`volume_total`,`created_at`)VALUES(%s,%s,%s);"
     val = (int(resume["tree_amount"]),int(resume["volume_total"]),pri_file.date_file.strftime('%Y-%m-%d %H:%M:%S'))
     con.execute(sql,val)
     mydb.commit()
