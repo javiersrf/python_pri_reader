@@ -31,7 +31,5 @@ def leitura_de_arquivo_pri(path):
             con.execute(sql,val)
             mydb.commit()
     mydb.close()
-    with open("last_file.txt","+w") as f:
-        f.write(path)
         
 # s = leitura_de_arquivo_pri('s')
