@@ -38,8 +38,6 @@ def get_arquivo_pri():
             ultimo_arquivo_gravado = ultimo_arquivo_lido
             if ultimo_arquivo_gravado:
                 if ultimo_arquivo_gravado!= arquivo_mais_novo.caminho:
-                    print(ultimo_arquivo_gravado)
-                    print(arquivo_mais_novo.caminho)
                     return arquivo_mais_novo
                 else:
                     return None
