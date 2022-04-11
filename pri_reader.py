@@ -13,7 +13,6 @@ def app():
     # Funcao que verifica quais arquivos devem ser lidos e tradados
     # aqui devera ser implementado a funcao que define se o arquivo é novo ou não
     arquivo_pri_valido = get_arquivo_pri()
-    print(arquivo_pri_valido)
     if arquivo_pri_valido:
         leitura_de_arquivo_pri(arquivo_pri_valido.caminho)
     

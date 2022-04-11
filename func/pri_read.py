@@ -30,9 +30,10 @@ def leitura_de_arquivo_pri(path):
         if resultado:
             ultimo_id = resultado[0] 
             valors = [list(x.values()) for x in resume["groupying"]]
+            print(valors)
             for x in valors:
                 sql = "INSERT INTO smartfleet.pri_logs_resume(pri_id,product,length ,logs_amount,volume_total)VALUES(%s,%s,%s,%s,%s);"
-                val = (ultimo_id,x[0],x[1],x[2],int(x[3]))
+                val = (int(ultimo_id),str(x[0]),int(x[1]),int(x[2]),int(x[3]))
                 con.execute(sql,val)
                 mydb.commit()
     mydb.close()
