@@ -3,6 +3,7 @@ import mysql.connector
 
 
 def leitura_de_arquivo_pri(path):
+    print("foi a leitura")
     name_path  =path
     path = 'C:/prd/'+path
     with open(path) as file:
