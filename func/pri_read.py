@@ -3,7 +3,6 @@ import mysql.connector
 
 
 def leitura_de_arquivo_pri(path):
-    print("foi a leitura")
     name_path  =path
     path = 'C:/prd/'+path
     with open(path) as file:
@@ -31,7 +30,7 @@ def leitura_de_arquivo_pri(path):
             ultimo_id = resultado[0] 
             valors = [list(x.values()) for x in resume["groupying"]]
             for x in valors:
-                sql = "INSERT INTO smartfleet.pri_logs_resume(pri_id,product,logs_amount,volume_total,min_length,max_length,avg_length)VALUES(%s,%s,%s,%s,%s,,%s,%s);"
+                sql = "INSERT INTO smartfleet.pri_logs_resume(pri_id,product,logs_amount,volume_total,min_length,max_length,avg_length)VALUES(%s,%s,%s,%s,%s,%s,%s);"
                 # pri_id,product,logs_amount,volume_total
                 val = (int(ultimo_id),str(x[0]),int(x[1]),int(x[2]),int(x[3]),int(x[4]),float(x[5]))
                 con.execute(sql,val)
