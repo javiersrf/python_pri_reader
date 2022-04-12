@@ -4,6 +4,7 @@ def translateVariableToValue(variable)->str:
     dict = {
         "1":"price matrix",
         "2":"Species number",
+        "44":"calibre",
         "20":"20",
         "201":"Diameter top, ob",
         "202":"Diameter top, ub",
@@ -103,7 +104,7 @@ class PriFile:
         
         
 
-    def resume(self):
+    def resume_by_length(self):
         tree_amount = max([int(x["Stem number"]) for x in self.values if "Stem number" in x])
         volume_total = sum(float(x[self.__volume__]) for x in self.values if self.__volume__ in x)
         # lenght_total = sum([int(x[self.__length__]) for x in self.values if self.__length__ in x])
@@ -112,7 +113,7 @@ class PriFile:
         for y in ids:
             temp = [x for x in self.values if x["Physical length"]== y]
             grouyping.append({
-                "id":[x["ID"] for x in self.values if x["Physical length"] ==y][0],
+                "id":[x["ID"] for x in self.values if x["ID"] ==y][0],
                 "Physical length": y,
                 "logs_amount" :len(temp),
                 "volume_total" : sum(float(x[self.__volume__]) for x in temp if self.__volume__ in x),
@@ -122,6 +123,29 @@ class PriFile:
             "tree_amount":tree_amount,
             "volume_total":volume_total,
             # "length_total": lenght_total ,
+            "types":list(ids),
+            "groupying":grouyping}  
+
+    def resume_by_id(self):
+        tree_amount = max([int(x["Stem number"]) for x in self.values if "Stem number" in x])
+        volume_total = sum(float(x[self.__volume__]) for x in self.values if self.__volume__ in x)
+        # lenght_total = sum([int(x[self.__length__]) for x in self.values if self.__length__ in x])
+        ids = np.unique([x["ID"] for x in self.values if "ID" in x])
+        grouyping = []
+        for y in ids:
+            temp = [x for x in self.values if x["ID"]== y]
+            grouyping.append({
+                "id":[x["ID"] for x in self.values if x["ID"] ==y][0],
+                # "Physical length": y,
+                "logs_amount" :len(temp),
+                "volume_total" : sum(float(x[self.__volume__]) for x in temp if self.__volume__ in x),
+                "max_length":  max([int(x[self.__length__]) for x in temp if self.__length__ in x]),
+                "min_length":  min([int(x[self.__length__]) for x in temp if self.__length__ in x]),
+                "avg_length":  round(float(np.mean([int(x[self.__length__]) for x in temp if self.__length__ in x])),2)
+            })
+        return {
+            "tree_amount":tree_amount,
+            "volume_total":volume_total,
             "types":list(ids),
             "groupying":grouyping}    
     def __str__(self) -> str:

@@ -9,7 +9,7 @@ def leitura_de_arquivo_pri(path):
     with open(path) as file:
         texto = file.read()
         pri_file = PriFile(texto)
-    resume = pri_file.resume()
+    resume = pri_file.resume_by_id()
     valors = [list(x.values()) for x in resume["groupying"]]
     '''
     Ordenando os registro para qual foi o ultimo
@@ -32,8 +32,10 @@ def leitura_de_arquivo_pri(path):
             valors = [list(x.values()) for x in resume["groupying"]]
             print(valors)
             for x in valors:
-                sql = "INSERT INTO smartfleet.pri_logs_resume(pri_id,product,length ,logs_amount,volume_total)VALUES(%s,%s,%s,%s,%s);"
-                val = (int(ultimo_id),str(x[0]),int(x[1]),int(x[2]),int(x[3]))
+                sql = "INSERT INTO smartfleet.pri_logs_resume(pri_id,product,logs_amount,volume_total,min_length,max_length,avg_length)VALUES(%s,%s,%s,%s,,%s,,%s,%s);"
+
+                # pri_id,product,logs_amount,volume_total
+                val = (int(ultimo_id),str(x[0]),int(x[1]),int(x[2]),int(x[3]),int(x[4]),float(x[5]))
                 con.execute(sql,val)
                 mydb.commit()
     mydb.close()
