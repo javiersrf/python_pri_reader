@@ -127,9 +127,9 @@ class PriFile:
             "groupying":grouyping}  
 
     def resume_by_id(self):
-        tree_amount = max([int(x["Stem number"]) for x in self.values if "Stem number" in x])
+        tree_amount = int(self.dict["221-1"]["values"][0]) if "221-1" in self.dict else  max([int(x["Stem number"]) for x in self.values if "Stem number" in x])
         volume_total = sum(float(x[self.__volume__]) for x in self.values if self.__volume__ in x)
-        # lenght_total = sum([int(x[self.__length__]) for x in self.values if self.__length__ in x])
+        
         ids = np.unique([x["ID"] for x in self.values if "ID" in x])
         grouyping = []
         for y in ids:
