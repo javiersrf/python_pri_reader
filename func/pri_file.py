@@ -40,7 +40,7 @@ def translateVariableToValue(variable)->str:
 
 class PriFile:
     def __init__(self,texto,parametros = 11):
-
+        self.valid = True
         self.__volume__ = "Volume dl sub"
         self.__length__ = "Physical length"
         self.text = texto.replace("~"," ~")
@@ -60,36 +60,39 @@ class PriFile:
 
 
     def generate_data(self):
-        labels = self.dict["256-1"]["values"]
-        labels = [translateVariableToValue(x) for x in labels]
-        len_dados = len(labels)
-        dados = self.dict["257-1"]["values"]
-        species_numbers_6 = self.dict["121-6"]["values"]
-        species_numbers_1 = self.dict["121-1"]["values"]
-        species_numbers_2 = self.dict["121-2"]["values"]
-        if len(species_numbers_1) > len(species_numbers_2):
-            species_numbers_1_temp = []
-            z = 0
-            while z < len(species_numbers_1):
-                species_numbers_1_temp.append("".join([species_numbers_1[z],species_numbers_1[z+1]]))
-                z+=2
-            species_numbers_1 = species_numbers_1_temp
-        self.values = []
-        while len(dados)>= len_dados:
-            dados_crus = dados[:len_dados]
-            dicte = {}
-            for y in range(len(dados_crus)):
-                idx = y-1
-                dicte[labels[idx]] = dados_crus[idx]
-            if dicte["20"] != '0':
-                idx_species_id = species_numbers_6.index(dicte["20"])
-                identificador = species_numbers_1[idx_species_id] +species_numbers_2[idx_species_id]    
-            else:
-                identificador ='UNDENTIFIED'
-            dicte["ID"] = identificador
-            self.values.append(dicte)
-            dados = dados[len_dados:]
-        self.date_file = self.strToDate(self.dict["16-4"]["values"][0])
+        if "256-1" in self.dict:
+            labels = self.dict["256-1"]["values"]
+            labels = [translateVariableToValue(x) for x in labels]
+            len_dados = len(labels)
+            dados = self.dict["257-1"]["values"]
+            species_numbers_6 = self.dict["121-6"]["values"]
+            species_numbers_1 = self.dict["121-1"]["values"]
+            species_numbers_2 = self.dict["121-2"]["values"]
+            if len(species_numbers_1) > len(species_numbers_2):
+                species_numbers_1_temp = []
+                z = 0
+                while z < len(species_numbers_1):
+                    species_numbers_1_temp.append("".join([species_numbers_1[z],species_numbers_1[z+1]]))
+                    z+=2
+                species_numbers_1 = species_numbers_1_temp
+            self.values = []
+            while len(dados)>= len_dados:
+                dados_crus = dados[:len_dados]
+                dicte = {}
+                for y in range(len(dados_crus)):
+                    idx = y-1
+                    dicte[labels[idx]] = dados_crus[idx]
+                if dicte["20"] != '0':
+                    idx_species_id = species_numbers_6.index(dicte["20"])
+                    identificador = species_numbers_1[idx_species_id] +species_numbers_2[idx_species_id]    
+                else:
+                    identificador ='UNDENTIFIED'
+                dicte["ID"] = identificador
+                self.values.append(dicte)
+                dados = dados[len_dados:]
+            self.date_file = self.strToDate(self.dict["16-4"]["values"][0])
+        else:
+            self.valid = False
         
 
     def strToDate(self,string):
