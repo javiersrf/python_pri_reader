@@ -7,7 +7,7 @@ def leitura_de_arquivo_pri(path):
     path = 'C:/prd/'+path
     mydb = mysql.connector.connect(host="localhost", user="smartfleet", password="smartkey",database="smartfleet")
     con = mydb.cursor()
-    sql = "UPDATE smartfleet.reading_status SET read_pri_status = 1 where 1=1;"
+    sql = "UPDATE smartfleet.reading_status SET read_pri_status = 1, updated_at = current_date() where 1=1;"
     con.execute(sql)
     mydb.commit()
     mydb.close()
