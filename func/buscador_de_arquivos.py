@@ -16,8 +16,14 @@ def get_arquivo_pri():
     try:
         mydb = mysql.connector.connect(host="localhost", user="smartfleet", password="smartkey",database="smartfleet")
         con = mydb.cursor()
-        sql = "SELECT file_path FROM smartfleet.pri ORDER BY id DESC LIMIT 1;"
-        con.execute(sql)
+        sql_1 = "SELECT read_pri_status FROM smartfleet.reading_status ORDER BY updated_at DESC LIMIT 1;"
+        con.execute(sql_1)
+        status_de_leitura = con.fetchone()
+        if status_de_leitura !=None:
+            if status_de_leitura[0] == 1:
+                return None
+        sql_2 = "SELECT file_path FROM smartfleet.pri ORDER BY id DESC LIMIT 1;"
+        con.execute(sql_2)
         ultimo_arquivo_lido = con.fetchone()
         if ultimo_arquivo_lido!=None:
             ultimo_arquivo_lido = ultimo_arquivo_lido[0] 
