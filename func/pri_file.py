@@ -52,14 +52,21 @@ class PriFile:
         for x in lista_result:
             splitado = x.split(" ")
             variable = splitado[0]
+            # Aqui, salvará cada conjunto chave-resultados no dicionário principal,
+            # sendo a chave do mesmo o conjunto "chave" + "tipo"
             self.dict[f"{variable}-{splitado[1]}"] = {
                 "type":splitado[1],
                 "values": [l for l in splitado[2:] if l] if len(splitado)>2 else None
             }
+        # Após organizar todos os dados no dicionário,
+        # chama a função que gera os dados principais com base no dicionário
         self.generate_data()
 
 
     def generate_data(self):
+        # A chave 256-1 faz referência à legenda dos dados presente
+        # no arquivo. Portanto, é importante começar a leitura por ela para ententer o tamanho do resultado 
+        # e a posição de cada valor. 
         if "256-1" in self.dict:
             labels = self.dict["256-1"]["values"]
             labels = [translateVariableToValue(x) for x in labels]
@@ -72,7 +79,7 @@ class PriFile:
                 species_numbers_1_temp = []
                 z = 0
                 while z < len(species_numbers_1):
-                    species_numbers_1_temp.append("".join([species_numbers_1[z],species_numbers_1[z+1]]))
+                    species_numbers_1_temp.append("".join([species_numbers_1[z],species_numbers_1[z+1] if len(species_numbers_1)>z+1 else ""]))
                     z+=2
                 species_numbers_1 = species_numbers_1_temp
             self.values = []
@@ -82,11 +89,14 @@ class PriFile:
                 for y in range(len(dados_crus)):
                     idx = y-1
                     dicte[labels[idx]] = dados_crus[idx]
-                if dicte["20"] != '0':
-                    idx_species_id = species_numbers_6.index(dicte["20"])
-                    identificador = species_numbers_1[idx_species_id] +species_numbers_2[idx_species_id]    
+                identificador ='UNDENTIFIED'
+                if "20" in dicte:
+                    if dicte["20"] != '0':
+                        idx_species_id = species_numbers_6.index(dicte["20"])
+                        identificador = species_numbers_1[idx_species_id] +species_numbers_2[idx_species_id]     
                 else:
-                    identificador ='UNDENTIFIED'
+                    if "price matrix" in dicte and dicte["price matrix"]!="0":
+                        identificador = species_numbers_1[int(dicte["price matrix"])-1]
                 dicte["ID"] = identificador
                 self.values.append(dicte)
                 dados = dados[len_dados:]
