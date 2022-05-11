@@ -43,12 +43,13 @@ def leitura_de_arquivo_pri(path):
                     val = (int(ultimo_id),str(x[0]),int(x[1]),int(x[2]),int(x[3]),int(x[4]),float(x[5]))
                     con.execute(sql,val)
                     mydb.commit()
+            try:
+                os.remove(path)
+            except:
+                pass
         sql = "UPDATE smartfleet.reading_status SET read_pri_status = 0, updated_at = current_date() where 1=1;"
         con.execute(sql)
         mydb.commit()
         mydb.close()
-        try:
-            os.remove(path)
-        except:
-            pass
+        
 

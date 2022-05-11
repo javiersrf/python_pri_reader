@@ -12,9 +12,10 @@ def app():
     '''
     # Funcao que verifica quais arquivos devem ser lidos e tradados
     # aqui devera ser implementado a funcao que define se o arquivo é novo ou não
-    arquivo_pri_valido = get_arquivo_pri()
-    if arquivo_pri_valido:
-        leitura_de_arquivo_pri(arquivo_pri_valido.caminho)
+    arquivos_pri_validos = get_arquivo_pri()
+    if arquivos_pri_validos:
+        for x in arquivos_pri_validos:
+            leitura_de_arquivo_pri(x)
     
     event_schedule.enter(10, 1, app,)
 # app()

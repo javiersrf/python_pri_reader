@@ -32,23 +32,16 @@ def get_arquivo_pri():
         mydb.close() # fechando a conexao com o banco pois não será mais necessária
         caminho = 'C:/prd/' # Mocando o prefixo do arquivo para que seja possível localizar no diretorio
         resultado = []
-        arquivos =os.listdir(caminho)    
+        arquivos =os.listdir(caminho)
         for arquivo in arquivos:
             data_criacao = os.path.getctime(caminho+arquivo)
             data_atualizado = os.path.getmtime(caminho+arquivo)
-            if arquivo.endswith(".pri") :  
+            if arquivo.endswith(".pri") and ultimo_arquivo_lido!= arquivo:
                 resultado.append(CaminhoDoArquivo(caminho=arquivo,data_criado=data_criacao,data_atualizado=data_atualizado))
         resultado.sort(key=myFunc,reverse=True,)
-        arquivo_mais_novo = resultado[0]
         if resultado:
-            ultimo_arquivo_gravado = ultimo_arquivo_lido
-            if ultimo_arquivo_gravado:
-                if ultimo_arquivo_gravado!= arquivo_mais_novo.caminho:
-                    return arquivo_mais_novo
-                else:
-                    return None
-            return arquivo_mais_novo
+            return [result.caminho for result in resultado]
         return None
-    except :
-        return None
+    except:
+        pass
 
