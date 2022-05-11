@@ -1,0 +1,2 @@
+cx_freeze
+mysql-connector-python

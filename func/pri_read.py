@@ -1,5 +1,6 @@
 from func.pri_file import PriFile
 import mysql.connector
+import os
 
 
 def leitura_de_arquivo_pri(path):
@@ -46,5 +47,8 @@ def leitura_de_arquivo_pri(path):
         con.execute(sql)
         mydb.commit()
         mydb.close()
-        
-# s = leitura_de_arquivo_pri('s')
+        try:
+            os.remove(path)
+        except:
+            pass
+
