@@ -67,6 +67,7 @@ class PriFile:
         # A chave 256-1 faz referência à legenda dos dados presente
         # no arquivo. Portanto, é importante começar a leitura por ela para ententer o tamanho do resultado 
         # e a posição de cada valor. 
+        self.values = []
         if "256-1" in self.dict:
             labels = self.dict["256-1"]["values"]
             labels = [translateVariableToValue(x) for x in labels]
@@ -82,7 +83,6 @@ class PriFile:
                     species_numbers_1_temp.append("".join([species_numbers_1[z],species_numbers_1[z+1] if len(species_numbers_1)>z+1 else ""]))
                     z+=2
                 species_numbers_1 = species_numbers_1_temp
-            self.values = []
             while len(dados)>= len_dados:
                 dados_crus = dados[:len_dados]
                 dicte = {}

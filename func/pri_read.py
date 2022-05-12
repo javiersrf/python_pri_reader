@@ -15,11 +15,11 @@ def leitura_de_arquivo_pri(path):
     with open(path) as file:
         texto = file.read()
         pri_file = PriFile(texto)
+    mydb = mysql.connector.connect(host="localhost", user="smartfleet", password="smartkey",database="smartfleet")
+    con = mydb.cursor()  
     if pri_file.valid:
         resume = pri_file.resume_by_id()
         valors = [list(x.values()) for x in resume["groupying"]]
-        mydb = mysql.connector.connect(host="localhost", user="smartfleet", password="smartkey",database="smartfleet")
-        con = mydb.cursor()    
         '''
         Ordenando os registro para qual foi o ultimo
         '''
@@ -44,12 +44,17 @@ def leitura_de_arquivo_pri(path):
                     con.execute(sql,val)
                     mydb.commit()
             try:
+                pass
                 os.remove(path)
             except:
                 pass
-        sql = "UPDATE smartfleet.reading_status SET read_pri_status = 0, updated_at = current_date() where 1=1;"
-        con.execute(sql)
-        mydb.commit()
-        mydb.close()
+    sql = "UPDATE smartfleet.reading_status SET read_pri_status = 0, updated_at = current_date() where 1=1;"
+    con.execute(sql)
+    mydb.commit()
+    mydb.close()
+    try:
+        os.remove(path)
+    except:
+        pass
         
 
