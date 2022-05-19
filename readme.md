@@ -2,7 +2,7 @@
 <h3 align="center">Algoritmo de leitura para arquivos pri/stanford</h2>
 <p>Alterações do algoritmo devem ser realizadas em branchs diferentes. A branch main contem o algoritmo de execucao estavel</p>
 
-</h2>Getting Started</h2>
+<h2>Getting Started</h2>
 <p>Antes de rodar, certifique-se que as bibliotecas necessárias foram instaladas</p>
 
 ```
@@ -18,7 +18,7 @@ pip uninstall cx_freeze
 
 <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#cx_freeze"><h3>BAIXAR BIBLIOTECA cx_freeze CORRETA</h3></a>
 
-</h2>Build</h2>
+<h2>Build</h2>
 <p>Com a biblioteca instalada, utilize o a seguir para iniciar o build</p>
 
 ```
