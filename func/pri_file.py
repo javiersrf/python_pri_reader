@@ -100,7 +100,7 @@ class PriFile:
                 dicte["ID"] = identificador
                 self.values.append(dicte)
                 dados = dados[len_dados:]
-            self.date_file = self.strToDate(self.dict["16-4"]["values"][0])
+            self.date_file = self.strToDate(self.dict["12-4"]["values"][0])
         else:
             self.valid = False
         
