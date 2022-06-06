@@ -1,5 +1,6 @@
 import os
 import mysql.connector
+from .env import MAIN_LOCAL, LOG_LOCAL
 class CaminhoDoArquivo:
     def __init__(self,caminho,data_criado,data_atualizado):
         self.caminho = caminho
@@ -13,6 +14,8 @@ class CaminhoDoArquivo:
 def my_func(e):
   return e.data_atualizado
 def get_arquivo_pri():
+    if not os.path.isdir(LOG_LOCAL):
+        os.makedirs(LOG_LOCAL)
     try:
         # Verificando se há alguma leitura em processamento
         mydb = mysql.connector.connect(host="localhost", user="smartfleet", password="smartkey",database="smartfleet")
@@ -29,7 +32,7 @@ def get_arquivo_pri():
         if ultimo_arquivo_lido!=None:
             ultimo_arquivo_lido = ultimo_arquivo_lido[0] #Adicionando o arquivo lido à variável 
         mydb.close() # fechando a conexao com o banco pois não será mais necessária
-        caminho = 'C:/prd/' # Mocando o prefixo do arquivo para que seja possível localizar no diretorio
+        caminho = MAIN_LOCAL # Mocando o prefixo do arquivo para que seja possível localizar no diretorio
         resultado = []
         arquivos =os.listdir(caminho)
         for arquivo in arquivos:
