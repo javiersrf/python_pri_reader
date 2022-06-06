@@ -1,4 +1,4 @@
-from func.pri_file import PriFile
+from src.pri_file import PriFile
 with open('C:/prd/FAZENDA_TRA-220322-154221.pri') as file:
         texto = file.read()
         pri_file = PriFile(texto)
